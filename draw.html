@@ -14,7 +14,9 @@
       margin: 0;
       padding: 1rem;
     }
-    h1 { margin-bottom: 0.5rem; }
+    h1 {
+      margin-bottom: 0.5rem;
+    }
     canvas {
       border: 2px solid #333;
       border-radius: 10px;
@@ -22,9 +24,17 @@
       touch-action: none;
     }
     .controls {
-      margin: 1rem 0;
       display: flex;
-      gap: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    .controls label {
+      font-size: 0.9rem;
+    }
+    input[type="color"], input[type="range"] {
+      cursor: pointer;
     }
     button {
       padding: 0.5rem 1rem;
@@ -33,6 +43,7 @@
       background: #0070f3;
       color: white;
       cursor: pointer;
+      font-weight: 600;
     }
     button:hover { background: #005ad1; }
     form {
@@ -41,55 +52,61 @@
       gap: 0.75rem;
       max-width: 400px;
       width: 100%;
+      align-items: center;
+      margin-top: 1rem;
     }
-    input, textarea {
-      padding: 0.5rem;
-      border-radius: 8px;
+    textarea {
+      width: 90%;
+      max-width: 500px;
+      height: 80px;
       border: 1px solid #ccc;
-      width: 100%;
+      border-radius: 10px;
+      padding: 0.75rem;
+      font-family: inherit;
+      resize: none;
     }
   </style>
 </head>
 <body>
 
   <h1>🎨 Draw Something!</h1>
-  <p>Make a doodle and send it anonymously!</p>
+  <p>Use the tools below to doodle and submit anonymously!</p>
 
   <canvas id="canvas" width="400" height="400"></canvas>
 
+  <!-- 🧰 Controls -->
   <div class="controls">
-    <button id="clearBtn">Clear</button>
-    <button id="saveBtn">Download</button>
+    <label>🎨 Color: <input type="color" id="colorPicker" value="#000000"></label>
+    <label>🖌️ Size: <input type="range" id="brushSize" min="1" max="20" value="3"></label>
+    <button id="undoBtn" type="button">↩️ Undo</button>
+    <button id="clearBtn" type="button">🧹 Clear</button>
+    <button id="saveBtn" type="button">💾 Download</button>
   </div>
 
-  <form action="https://formspree.io/f/xqaygllk" method="POST" enctype="multipart/form-data">
+  <!-- 📨 Submission Form -->
+  <form action="https://formspree.io/f/xqaygllk" method="POST">
     <input type="hidden" name="drawing" id="drawingInput">
     <textarea name="message" placeholder="Add a message or caption (optional)"></textarea>
-    <button type="submit">Submit Drawing</button>
+    <button type="submit">📤 Submit Drawing</button>
   </form>
 
   <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    const colorPicker = document.getElementById('colorPicker');
+    const brushSize = document.getElementById('brushSize');
     const drawingInput = document.getElementById('drawingInput');
+    const undoBtn = document.getElementById('undoBtn');
     const clearBtn = document.getElementById('clearBtn');
     const saveBtn = document.getElementById('saveBtn');
 
     let drawing = false;
+    let color = colorPicker.value;
+    let size = brushSize.value;
+    let history = [];
+    let currentStep = -1;
 
-    canvas.addEventListener('mousedown', startDraw);
-    canvas.addEventListener('mouseup', stopDraw);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('touchstart', startDraw);
-    canvas.addEventListener('touchend', stopDraw);
-    canvas.addEventListener('touchmove', draw);
-
-    function getPos(e) {
-      if (e.touches) e = e.touches[0];
-      const rect = canvas.getBoundingClientRect();
-      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    }
-
+    // 🖊️ Start Drawing
     function startDraw(e) {
       drawing = true;
       ctx.beginPath();
@@ -97,32 +114,83 @@
       ctx.moveTo(pos.x, pos.y);
     }
 
+    // 🛑 Stop Drawing
     function stopDraw() {
+      if (!drawing) return;
       drawing = false;
+      ctx.closePath();
+      saveState();
       drawingInput.value = canvas.toDataURL('image/png');
     }
 
+    // 🧭 Get Cursor Position
+    function getPos(e) {
+      if (e.touches) e = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    // 🧠 Draw Function
     function draw(e) {
       if (!drawing) return;
       e.preventDefault();
       const pos = getPos(e);
-      ctx.lineWidth = 2;
+      ctx.lineWidth = size;
       ctx.lineCap = 'round';
-      ctx.strokeStyle = '#000';
+      ctx.strokeStyle = color;
       ctx.lineTo(pos.x, pos.y);
       ctx.stroke();
     }
 
+    // 🕹️ Event Listeners
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('touchstart', startDraw);
+    canvas.addEventListener('touchend', stopDraw);
+    canvas.addEventListener('touchmove', draw);
+
+    colorPicker.oninput = () => (color = colorPicker.value);
+    brushSize.oninput = () => (size = brushSize.value);
+
+    // 🧹 Clear Canvas
     clearBtn.onclick = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      saveState();
     };
 
+    // 💾 Save Drawing
     saveBtn.onclick = () => {
       const link = document.createElement('a');
       link.download = 'drawing.png';
       link.href = canvas.toDataURL();
       link.click();
     };
+
+    // 🔙 Undo Function
+    undoBtn.onclick = () => {
+      if (currentStep > 0) {
+        currentStep--;
+        let canvasPic = new Image();
+        canvasPic.src = history[currentStep];
+        canvasPic.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(canvasPic, 0, 0);
+        };
+      }
+    };
+
+    // 💾 Save State for Undo
+    function saveState() {
+      currentStep++;
+      if (currentStep < history.length) {
+        history.length = currentStep;
+      }
+      history.push(canvas.toDataURL());
+    }
+
+    // Initialize first blank state
+    saveState();
   </script>
 </body>
 </html>
