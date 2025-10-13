@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Community Wall</title>
+  <title>🧱 Community Wall</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
@@ -35,6 +35,7 @@
       padding: 1rem 1.25rem;
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
       transition: transform 0.2s;
+      cursor: pointer;
     }
     .issue:hover { transform: translateY(-2px); }
 
@@ -48,11 +49,6 @@
       font-size: 0.95rem;
       line-height: 1.4;
     }
-    .issue a {
-      text-decoration: none;
-      color: #0070f3;
-      font-weight: 500;
-    }
 
     footer {
       font-size: 0.85rem;
@@ -60,19 +56,13 @@
       text-align: center;
       margin: 2rem 0;
     }
-
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.5rem; }
-      .issue h2 { font-size: 1.05rem; }
-    }
   </style>
 </head>
 <body>
 
   <header>
     <h1>🧱 Community Wall</h1>
-    <p>These are public questions, notes, and drawings posted to my GitHub Issues.</p>
-    <p><a href="https://github.com/coldwer/home/issues/new" target="_blank">Create a new post</a></p>
+    <p>Anonymous posts, questions, and drawings from visitors.</p>
   </header>
 
   <main id="issues-container">
@@ -80,12 +70,12 @@
   </main>
 
   <footer>
-    <p>© 2025 Coldwer — Powered by <a href="https://github.com/coldwer/home" target="_blank">GitHub Issues</a></p>
+    <p>© 2025 Coldwer — Powered by GitHub Issues</p>
   </footer>
 
   <script>
-    const username = "coldwer";
-    const repo = "home";
+    const username = "coldwer";      
+    const repo = "home"; 
 
     const container = document.getElementById("issues-container");
 
@@ -105,12 +95,14 @@
           div.className = "issue";
 
           const bodyPreview = issue.body ? issue.body.slice(0, 160) + (issue.body.length > 160 ? "..." : "") : "";
-          
           div.innerHTML = `
-            <h2><a href="${issue.html_url}" target="_blank">${issue.title}</a></h2>
+            <h2>${issue.title}</h2>
             <p>${bodyPreview || "<i>No description</i>"}</p>
-            <p style="font-size:0.8rem; color:#777;">#${issue.number} • by ${issue.user.login}</p>
+            <p style="font-size:0.8rem; color:#777;">#${issue.number} • ${new Date(issue.created_at).toLocaleDateString()}</p>
           `;
+          div.addEventListener("click", () => {
+            window.location.href = `post.html?id=${issue.number}`;
+          });
           container.appendChild(div);
         });
 

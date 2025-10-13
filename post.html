@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🗨️ Post</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    main {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      max-width: 800px;
+      width: 100%;
+      padding: 1.5rem;
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 0.25rem;
+    }
+    p.meta {
+      color: #888;
+      font-size: 0.9rem;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+    }
+    .body {
+      line-height: 1.6;
+      font-size: 1rem;
+      color: #333;
+      white-space: pre-wrap;
+    }
+    .comments {
+      margin-top: 2rem;
+    }
+    .comment {
+      border-top: 1px solid #eee;
+      padding: 1rem 0;
+    }
+    .comment:first-child { border-top: none; }
+    .comment strong { color: #0070f3; }
+    a.back {
+      text-decoration: none;
+      margin: 2rem 0 1rem;
+      color: #0070f3;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <main id="post">
+    <p>Loading post...</p>
+  </main>
+
+  <a href="wall.html" class="back">← Back to Community Wall</a>
+
+  <script>
+    const username = "coldwer";
+    const repo = "home";
+
+    const params = new URLSearchParams(window.location.search);
+    const issueNumber = params.get("id");
+    const postContainer = document.getElementById("post");
+
+    async function loadPost() {
+      try {
+        const issueRes = await fetch(`https://api.github.com/repos/${username}/${repo}/issues/${issueNumber}`);
+        const issue = await issueRes.json();
+
+        if (!issue.title) {
+          postContainer.innerHTML = "<p style='color:red;'>Post not found.</p>";
+          return;
+        }
+
+        // Fetch comments
+        const commentsRes = await fetch(`https://api.github.com/repos/${username}/${repo}/issues/${issueNumber}/comments`);
+        const comments = await commentsRes.json();
+
+        // Render issue
+        postContainer.innerHTML = `
+          <h1>${issue.title}</h1>
+          <p class="meta">#${issue.number} • ${new Date(issue.created_at).toLocaleString()}</p>
+          <div class="body">${issue.body ? issue.body.replace(/\n/g, "<br>") : "<i>No content</i>"}</div>
+
+          <div class="comments">
+            <h3>💬 Comments</h3>
+            ${comments.length === 0 
+              ? "<p style='color:#888;'>No comments yet.</p>" 
+              : comments.map(c => `
+                <div class="comment">
+                  <strong>${c.user.login}</strong> <span style="color:#888;">on ${new Date(c.created_at).toLocaleDateString()}</span>
+                  <div>${c.body.replace(/\n/g, "<br>")}</div>
+                </div>
+              `).join('')}
+          </div>
+
+          <p style="margin-top:1rem; font-size:0.9rem;">
+            View or reply directly on <a href="${issue.html_url}" target="_blank">GitHub</a>.
+          </p>
+        `;
+      } catch (err) {
+        console.error(err);
+        postContainer.innerHTML = "<p style='color:red;'>Failed to load post.</p>";
+      }
+    }
+
+    loadPost();
+  </script>
+</body>
+</html>
