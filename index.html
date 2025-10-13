@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📰 My Sites</title>
+  <title>🌍 Hub</title>
   <style>
-    /* 🌈 Global Styles */
+    /* 🌈 Global Layout */
     * { box-sizing: border-box; }
     body {
       font-family: system-ui, sans-serif;
@@ -16,8 +16,29 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
+      line-height: 1.6;
     }
+    h1, h2 { margin: 0.5rem 0; }
+    a { color: #0070f3; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* 🧱 Section Containers */
+    section {
+      width: 100%;
+      max-width: 700px;
+      background: #fff;
+      border-radius: 16px;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    section h2 {
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+
+    /* 🔹 Header Section */
     header {
       width: 100%;
       max-width: 700px;
@@ -31,8 +52,7 @@
       margin-bottom: 1rem;
       border: 3px solid #eee;
     }
-    h1 { margin: 0.25rem 0; font-size: 1.8rem; }
-    p.subtitle { color: #555; margin: 0 0 1rem; }
+    p.subtitle { color: #555; margin-bottom: 0.5rem; }
 
     /* 🔗 Link Buttons */
     .links {
@@ -55,23 +75,13 @@
       font-weight: 500;
       text-align: center;
     }
-    .link-button:hover { background: #f0f8ff; border-color: #cce0ff; }
+    .link-button:hover {
+      background: #f0f8ff;
+      border-color: #cce0ff;
+      transform: translateY(-2px);
+    }
 
-    /* 🧠 Ask Form */
-    section {
-      width: 100%;
-      max-width: 700px;
-      background: #fff;
-      border-radius: 16px;
-      margin: 2rem auto;
-      padding: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-    section h2 {
-      margin-top: 0;
-      font-size: 1.4rem;
-      text-align: center;
-    }
+    /* 💬 Form */
     form {
       display: flex;
       flex-direction: column;
@@ -104,6 +114,7 @@
     @media (max-width: 600px) {
       h1 { font-size: 1.5rem; }
       .link-button { font-size: 0.95rem; }
+      section { padding: 1.25rem; }
     }
 
     footer {
@@ -116,68 +127,68 @@
 </head>
 <body>
 
-  <!-- 🌟 Header -->
-  <header>
+  <!-- 🌟 ABOUT -->
+  <header id="about">
     <img class="avatar" src="profilepicture.png" alt="Profile photo">
     <h1>Hotwer</h1>
     <p class="subtitle">20+</p>
-    <p>Hello!</p>
+    <p>Hello! Welcome to my hub. Here’s everything I’m into and where you can interact with me.</p>
   </header>
 
-  <!-- 🔗 Links -->
-  <div class="links">
-    <a class="link-button" href="https://anilist.co/user/Hotwer/" target="_blank">🎎 AniList</a>
-    <a class="link-button" href="https://www.backloggd.com/u/Hotwer/" target="_blank">🎮 Backloggd</a>
-    <a class="link-button" href="https://letterboxd.com/Hotwer/" target="_blank">🎬 Letterboxd</a>
-    <a class="link-button" href="https://www.exophase.com/user/Coldwer/" target="_blank">🕹️ Exophase</a>
-    <a class="link-button" href="https://www.last.fm/user/hotwer76" target="_blank">🎵 Last.fm</a>
-    <a class="link-button" href="https://myfigurecollection.net/profile/Hotwer" target="_blank">🪆 MyFigureCollection</a>
-  </div>
+  <!-- 🔗 LINKS -->
+  <section id="links">
+    <h2>🌐 My Sites</h2>
+    <div class="links">
+      <a class="link-button" href="https://anilist.co/user/Hotwer/" target="_blank">🎎 AniList</a>
+      <a class="link-button" href="https://www.backloggd.com/u/Hotwer/" target="_blank">🎮 Backloggd</a>
+      <a class="link-button" href="https://letterboxd.com/Hotwer/" target="_blank">🎬 Letterboxd</a>
+      <a class="link-button" href="https://www.exophase.com/user/Coldwer/" target="_blank">🕹️ Exophase</a>
+      <a class="link-button" href="https://www.last.fm/user/hotwer76" target="_blank">🎵 Last.fm</a>
+      <a class="link-button" href="https://myfigurecollection.net/profile/Hotwer" target="_blank">🪆 MyFigureCollection</a>
+    </div>
+  </section>
 
-  <!-- 💬 Anonymous Ask Section -->
+  <!-- 💬 ASK -->
   <section id="ask">
     <h2>💬 Ask Me Anything</h2>
-    <p>Got a question, idea, or feedback? Send it anonymously below!  
-      I’ll post selected ones on my <a href="wall.html" target="_blank">Community Wall</a>.</p>
+    <p style="text-align:center;">Got a question, idea, or feedback? Send it anonymously below!  
+      I’ll share selected ones on the <a href="wall.html" target="_blank">Community Wall</a>.</p>
+
     <form action="https://formspree.io/f/manplbqw" method="POST">
       <textarea name="message" placeholder="Ask me anything..." required></textarea>
       <button type="submit">Send Anonymously</button>
     </form>
-    <p style="font-size:0.85rem; color:#888; margin-top:1rem;">
-      (Your message will be sent via a third-party form service — no sign-in needed.)
+
+    <p style="font-size:0.85rem; color:#888; text-align:center; margin-top:1rem;">
+      (Sent via a third-party form service — no login required.)
     </p>
   </section>
 
-  <!-- 🎨 Drawing Section -->
+  <!-- 🎨 DRAW -->
   <section id="draw">
     <h2>🎨 Draw Something</h2>
-    <p>Want to share a doodle? Use any of these canvas tools, then save your image  
-       and upload it to the <a href="wall.html" target="_blank">Community Wall</a>.</p>
-    <div class="links">
-      <a class="link-button" href="https://excalidraw.com" target="_blank">🖋️ Excalidraw</a>
-      <a class="link-button" href="https://tldraw.com" target="_blank">🎨 TLDraw</a>
-      <a class="link-button" href="https://sketch.io/sketchpad/" target="_blank">✏️ Sketchpad</a>
-    </div>
+    <p>Prefer to doodle right here instead of an external site?</p>
+    <a class="link-button" href="draw.html">🖌️ Open Drawing Canvas</a>
     <p style="font-size:0.85rem; color:#888;">
-      Export your drawing as an image (PNG) → upload it as a comment on my GitHub issue.
+      You can draw directly in your browser and submit it anonymously — no sign-in needed.
     </p>
+  </section>
+
+
+  <!-- 🧱 COMMUNITY WALL -->
+  <section id="community">
+    <h2>🧱 Community Wall</h2>
+    <p style="text-align:center;">
+      View all anonymous questions, doodles, and my replies.
+    </p>
+    <div class="links">
+      <a class="link-button" href="wall.html" target="_blank">🌐 Visit Community Wall</a>
+    </div>
   </section>
 
   <footer>
     <p>© 2025 Coldwer — Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a></p>
   </footer>
-
-  <!-- 🧠 Optional Form Integration -->
-  <script>
-    // Dummy form handler - replace with actual Formspree or backend endpoint
-    document.getElementById('askForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const message = document.getElementById('question').value.trim();
-      if (!message) return alert("Please write something first!");
-      alert("Thanks! This demo form would send your message anonymously using a form service.");
-      this.reset();
-    });
-  </script>
 
 </body>
 </html>
