@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+  <style>
+    /* 🌈 Global Styles */
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #fafafa;
+      color: #222;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+    }
+    img.avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 3px solid #eee;
+    }
+    h1 { margin: 0.25rem 0; font-size: 1.8rem; }
+    p.subtitle { color: #555; margin: 0 0 1rem; }
+
+    /* 🔗 Link Buttons */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 90%;
+      max-width: 400px;
+      margin: 1rem auto;
+    }
+    .link-button {
+      background: #fff;
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: 0.2s;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      text-align: center;
+    }
+    .link-button:hover { background: #f0f8ff; border-color: #cce0ff; }
+
+    /* 🧠 Ask Form */
+    section {
+      width: 100%;
+      max-width: 700px;
+      background: #fff;
+      border-radius: 16px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    section h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+    textarea {
+      width: 90%;
+      max-width: 500px;
+      height: 100px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 0.75rem;
+      resize: none;
+      font-family: inherit;
+    }
+    button {
+      background: #0070f3;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover { background: #0054b3; }
+
+    /* 📱 Responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .link-button { font-size: 0.95rem; }
+    }
+
+    footer {
+      font-size: 0.85rem;
+      color: #777;
+      text-align: center;
+      margin: 2rem 0 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌟 Header -->
+  <header>
+    <img class="avatar" src="https://github.com/yourusername.png" alt="Profile photo">
+    <h1>Your Name</h1>
+    <p class="subtitle">Test</p>
+    <p>Hello!</p>
+  </header>
+
+  <!-- 🔗 Links -->
+  <div class="links">
+    <a class="link-button" href="https://github.com/coldwer" target="_blank">💻 GitHub</a>
+    <a class="link-button" href="https://twitter.com/hotwer76" target="_blank">🐦 Twitter</a>
+  </div>
+
+  <!-- 💬 Anonymous Ask Section -->
+  <section id="ask">
+    <h2>💬 Ask Me Anything</h2>
+    <p>Got a question, idea, or feedback? Send it anonymously below!  
+      I’ll post selected ones on my <a href="https://github.com/coldwer/coldwer.github.io/issues" target="_blank">GitHub Wall</a>.</p>
+    <form id="askForm">
+      <textarea id="question" placeholder="Type your message here..." required></textarea>
+      <button type="submit">Send Anonymously</button>
+    </form>
+    <p style="font-size:0.85rem; color:#888; margin-top:1rem;">
+      (Your message will be sent via a third-party form service — no sign-in needed.)
+    </p>
+  </section>
+
+  <!-- 🎨 Drawing Section -->
+  <section id="draw">
+    <h2>🎨 Draw Something</h2>
+    <p>Want to share a doodle? Use any of these canvas tools, then save your image  
+       and upload it to the <a href="https://github.com/coldwer/coldwer.github.io/issues" target="_blank">Community Wall</a>.</p>
+    <div class="links">
+      <a class="link-button" href="https://excalidraw.com" target="_blank">🖋️ Excalidraw</a>
+      <a class="link-button" href="https://tldraw.com" target="_blank">🎨 TLDraw</a>
+      <a class="link-button" href="https://sketch.io/sketchpad/" target="_blank">✏️ Sketchpad</a>
+    </div>
+    <p style="font-size:0.85rem; color:#888;">
+      Export your drawing as an image (PNG) → upload it as a comment on my GitHub issue.
+    </p>
+  </section>
+
+  <footer>
+    <p>© 2025 Your Name — Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a></p>
+  </footer>
+
+  <!-- 🧠 Optional Form Integration -->
+  <script>
+    // Dummy form handler - replace with actual Formspree or backend endpoint
+    document.getElementById('askForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const message = document.getElementById('question').value.trim();
+      if (!message) return alert("Please write something first!");
+      alert("Thanks! This demo form would send your message anonymously using a form service.");
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>
