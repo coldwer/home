@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✋ About Me</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #fafafa;
+      color: #222;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.6;
+    }
+    h1, h2 { margin: 0.5rem 0; }
+    a { color: #0070f3; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+    }
+    img.avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 3px solid #eee;
+    }
+    p.subtitle { color: #555; margin-bottom: 0.5rem; }
+
+    section {
+      width: 100%;
+      max-width: 700px;
+      background: #fff;
+      border-radius: 16px;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    section h2 {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem 1rem;
+    }
+    .pill {
+      display: inline-block;
+      background: #f5f7fb;
+      border: 1px solid #e5eaf3;
+      color: #333;
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      margin: 0.25rem;
+    }
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 90%;
+      max-width: 400px;
+      margin: 1rem auto;
+    }
+    .link-button {
+      background: #fff;
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: 0.2s;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      text-align: center;
+    }
+    .link-button:hover {
+      background: #f0f8ff;
+      border-color: #cce0ff;
+      transform: translateY(-2px);
+    }
+    footer {
+      font-size: 0.85rem;
+      color: #777;
+      text-align: center;
+      margin: 2rem 0 1rem;
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      section { padding: 1.25rem; }
+    }
+  </style>
+  <meta name="description" content="About Hotwer — interests, what I'm doing now, and how to connect.">
+</head>
+<body>
+
+  <header>
+    <img class="avatar" src="profilepicture.png" alt="Profile photo">
+    <h1>Hotwer</h1>
+    <div class="links" style="margin-top:1rem;">
+      <a class="link-button" href="index.html">← Back to Hub</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>🙋 Bio</h2>
+    <p style="margin:0; text-align:center;">
+      Hey! I’m Hotwer. I enjoy discovering new games, anime and manga,
+      <br>then tracking them so I can look back at what I've played and watched.
+    </p>
+    <p style="margin:0; text-align:center;">
+        <br>Games I enjoyed : Genshin, Persona, Ace Attorney and many more!
+        <br>Anime/Manga I enjoyed : Steins;Gate, Frieren, Fate Series and the list goes on!
+    </p>
+  </section>
+
+  <section>
+    <h2>🎯 What I’m Into</h2>
+    <div style="text-align:center;">
+      <span class="pill">JRPGs</span>
+      <span class="pill">Indie Games</span>
+      <span class="pill">Open World</span>
+      <span class="pill">Roguelike</span>
+      <span class="pill">Sci-Fi</span>
+      <span class="pill">Iyashikei</span>
+      <span class="pill">Coming of Age</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>🌐 Find Me</h2>
+    <div class="links">
+      <a class="link-button" href="https://anilist.co/user/Hotwer/" target="_blank">🎎 AniList</a>
+      <a class="link-button" href="https://www.backloggd.com/u/Hotwer/" target="_blank">🎮 Backloggd</a>
+      <a class="link-button" href="https://letterboxd.com/Hotwer/" target="_blank">🎬 Letterboxd</a>
+      <a class="link-button" href="https://www.exophase.com/user/Coldwer/" target="_blank">🕹️ Exophase</a>
+      <a class="link-button" href="https://www.last.fm/user/hotwer76" target="_blank">🎵 Last.fm</a>
+      <a class="link-button" href="https://myfigurecollection.net/profile/Hotwer" target="_blank">🪆 MyFigureCollection</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Hotwer — Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a></p>
+  </footer>
+
+</body>
+</html>
+
